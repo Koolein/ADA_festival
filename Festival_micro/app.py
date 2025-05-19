@@ -3,8 +3,8 @@ from flask import Flask
 
 from db import engine, Base
 # Import both festival and session blueprints
-from Festival_micro.resources.Festival_CRUD import bp as festival_bp
-from Festival_micro.resources.Session_CRUD import bp as session_bp
+from resources.Festival_CRUD import bp as festival_bp
+from resources.Session_CRUD import bp as session_bp
 
 # Initialize Flask app
 def create_app():

@@ -2,8 +2,8 @@ from datetime import datetime
 
 from flask import jsonify, request, Blueprint
 
-from Festival_micro.daos.Festival_dao import FestivalDAO
-from Festival_micro.daos.Session_dao import SessionDAO
+from daos.Festival_dao import FestivalDAO
+from daos.Session_dao import SessionDAO
 from db import Session
 
 bp = Blueprint('festival', __name__)
