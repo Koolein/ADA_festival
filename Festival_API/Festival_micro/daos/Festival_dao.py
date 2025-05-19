@@ -15,12 +15,12 @@ class FestivalDAO(Base):
                             cascade="all, delete-orphan"
                             )
     status     = Column(Enum(FestivalStatus, name='Festival_status_enum'), nullable=False, default=FestivalStatus.SCHEDULED)
-    def __init__(self, id, name, start_date, end_date):
+    def __init__(self, id, name, start_date, end_date, status=FestivalStatus.SCHEDULED):
         self.id = id
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
-        self.status = FestivalStatus.SCHEDULED
+        self.status = status
         
 
         
