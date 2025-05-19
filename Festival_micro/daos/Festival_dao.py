@@ -5,7 +5,6 @@ from db import Base
 
 class FestivalDAO(Base):
     __tablename__ = "festivals"
-
     id          = Column(Integer, primary_key=True)
     name        = Column(String, nullable=False)
     start_date  = Column(DateTime)
@@ -14,7 +13,7 @@ class FestivalDAO(Base):
                             back_populates="festival", 
                             cascade="all, delete-orphan"
                             )
-    def __init__(self, name, start_date, end_date):
+    def __init__(self, id, name, start_date, end_date):
         self.id = id
         self.name = name
         self.start_date = start_date

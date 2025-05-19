@@ -14,7 +14,7 @@ class SessionDAO(Base):
     
     festival = relationship("FestivalDAO", back_populates="sessions")
     
-    def __init__(self, festival_id, title, start_time, end_time):
+    def __init__(self, id, festival_id, title, start_time, end_time):
         self.id = id
         self.festival_id = festival_id
         self.title = title
