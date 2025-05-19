@@ -6,7 +6,7 @@ from daos.Festival_dao import FestivalDAO
 from daos.Session_dao import SessionDAO
 from db import Session
 
-bp = Blueprint('festival', __name__)
+bp = Blueprint('Session', __name__)
 
 from db import Session
 
