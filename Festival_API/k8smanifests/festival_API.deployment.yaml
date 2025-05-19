@@ -16,7 +16,7 @@ spec:
         app: festival-service-api
     spec:
       containers:
-      - image: us-central1-docker.pkg.dev/DE2024-collin/festivalrepo/festival_service-api:0.0.1 # Docker image name, that we pushed to Artifact registry - use your project id, location, etc
+      - image: ${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/festival_service-api:0.0.1 # Docker image name, that we pushed to Artifact registry - use your project id, location, etc
         name: festival-service-api
         imagePullPolicy: "Always"
         ports:
