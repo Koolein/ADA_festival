@@ -4,6 +4,7 @@ from flask import jsonify, request, Blueprint
 
 from daos.Festival_dao import FestivalDAO
 from db import Session
+from constant import FestivalStatus
 
 bp = Blueprint('festival', __name__)
 
@@ -83,6 +84,18 @@ class Festival_CRUD:
             fest.start_date = datetime.fromisoformat(body['start_date'])
         if 'end_date' in body:
             fest.end_date = datetime.fromisoformat(body['end_date'])
+        if 'status' in body:
+            try:
+                # this converts the incoming string to your enum member
+                new_status = FestivalStatus(body['status'])
+            except ValueError:
+                session.close()
+                return jsonify({
+                    'message': f"Invalid status '{body['status']}'.  "
+                            f"Allowed: {[s.value for s in FestivalStatus]}"
+                }), 400
+            fest.status = new_status  # SQLAlchemy Enum column will store new_status.value
+            
         session.commit()
         session.refresh(fest)
         session.close()

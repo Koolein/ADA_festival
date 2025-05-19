@@ -5,7 +5,7 @@
       "entrypoint": "/bin/sh",
       "args": [
         "-c",
-        "cd ./lab4/deliveryservice-bq && python -m venv .myenv && . .myenv/bin/activate && pip install -r requirements_dev.txt && python -m pytest --junitxml=${SHORT_SHA}_test_log.xml",
+        "cd ./Festival_micro && python -m venv .myenv && . .myenv/bin/activate && pip install -r requirements_dev.txt && python -m pytest --junitxml=${SHORT_SHA}_test_log.xml",
         "--user"
       ]
     },
@@ -14,7 +14,7 @@
       "args": [
         "build",
         "-t",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/deliveryservice-bq-api:0.0.1",
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/festival_service-api:0.0.1",
         "./lab4/deliveryservice-bq"
       ]
     },
@@ -22,7 +22,7 @@
       "name": "gcr.io/cloud-builders/docker",
       "args": [
         "push",
-        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/deliveryservice-bq-api:0.0.1"
+        "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/festival_service-api:0.0.1"
       ]
     },
     {

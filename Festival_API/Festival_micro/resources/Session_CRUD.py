@@ -5,7 +5,7 @@ from flask import jsonify, request, Blueprint
 from daos.Festival_dao import FestivalDAO
 from daos.Session_dao import SessionDAO
 from db import Session
-
+from constant import SessionStatus
 bp = Blueprint('Session', __name__)
 
 from db import Session
@@ -82,6 +82,16 @@ class Session_CRUD:
             sess.start_time = datetime.fromisoformat(body['start_time'])
         if 'end_time' in body:
             sess.end_time = datetime.fromisoformat(body['end_time'])
+        if 'status' in body:
+            try:
+                new_status = SessionStatus(body['status'])
+            except ValueError:
+                session.close()
+                return jsonify({
+                    'message': f"Invalid status '{body['status']}'.  "
+                            f"Allowed: {[s.value for s in SessionStatus]}"
+                }), 400
+            session.status = new_status
         session.commit()
         session.refresh(sess)
         session.close()
