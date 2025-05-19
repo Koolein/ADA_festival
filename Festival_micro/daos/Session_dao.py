@@ -12,7 +12,7 @@ class SessionDAO(Base):
     start_time  = Column(DateTime)
     end_time    = Column(DateTime)
     
-    festival = relationship("Festival", back_populates="sessions")
+    festival = relationship("FestivalDAO", back_populates="sessions")
     
     def __init__(self, festival_id, title, start_time, end_time):
         self.id = id

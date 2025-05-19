@@ -10,7 +10,7 @@ class FestivalDAO(Base):
     name        = Column(String, nullable=False)
     start_date  = Column(DateTime)
     end_date    = Column(DateTime)
-    sessions = relationship("Session", 
+    sessions = relationship("SessionDAO", 
                             back_populates="festival", 
                             cascade="all, delete-orphan"
                             )
