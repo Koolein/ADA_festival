@@ -10,7 +10,7 @@ bp = Blueprint('festival', __name__)
 from db import Session
 
 
-class FestivalDelivery:
+class Festival_CRUD:
     @staticmethod
     @bp.route('/festivals', methods=['POST'])
     def create():
