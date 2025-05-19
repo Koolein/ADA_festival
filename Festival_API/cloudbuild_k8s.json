@@ -5,7 +5,7 @@
       "entrypoint": "/bin/sh",
       "args": [
         "-c",
-        "cd ./Festival_micro && python -m venv .myenv && . .myenv/bin/activate && pip install -r requirements_dev.txt && python -m pytest --junitxml=${SHORT_SHA}_test_log.xml",
+        "cd ./Festival_API/Festival_micro && python -m venv .myenv && . .myenv/bin/activate && pip install -r requirements_dev.txt && python -m pytest --junitxml=${SHORT_SHA}_test_log.xml",
         "--user"
       ]
     },
@@ -15,7 +15,7 @@
         "build",
         "-t",
         "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/festival_service-api:0.0.1",
-        "./lab4/deliveryservice-bq"
+        "./Festival_API/Festival_micro"
       ]
     },
     {
@@ -30,7 +30,7 @@
        "args": [
         "apply",
         "-f",
-        "lab4/k8smanifests/namespace.yaml"
+        "Festival_API/k8smanifests/namespace.yaml"
       ],
 	  "env": [
         "CLOUDSDK_COMPUTE_REGION=$_LOCATION",
@@ -42,7 +42,7 @@
        "args": [
         "apply",
         "-f",
-        "lab4/k8smanifests"
+        "Festival_API/k8smanifests"
       ],
 	  "env": [
         "CLOUDSDK_COMPUTE_REGION=$_LOCATION",
