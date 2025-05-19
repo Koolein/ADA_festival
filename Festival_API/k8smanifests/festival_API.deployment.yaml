@@ -2,26 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: festival_service-api
-  name: festival_service-api
+    app: festival-service-api
+  name: festival-service-api
   namespace: festivaldomain
 spec:
   replicas: 2 # Creating two replicas of the POD
   selector:
     matchLabels:
-      app: festival_service-api
+      app: festival-service-api
   template:
     metadata:
       labels:
-        app: festival_service-api
+        app: festival-service-api
     spec:
       containers:
       - image: us-central1-docker.pkg.dev/DE2024-collin/festivalrepo/festival_service-api:0.0.1 # Docker image name, that we pushed to Artifact registry - use your project id, location, etc
-        name: festival_service-api
+        name: festival-service-api
         imagePullPolicy: "Always"
         ports:
         - containerPort: 5000
           protocol: TCP
         env:
+        - name: PROJECT_ID
+          value: DE2024-collin  # use your project id
         - name: DB_URL
           value: bigquery://DE2024-collin/festivaldb  # use your project id/ bigquery db url
+        - _LOCATION = us-central1
+        - MODEL_REPO = festivalrepo
+        - MODEL_NAME = festival_models
