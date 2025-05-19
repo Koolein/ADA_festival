@@ -10,7 +10,7 @@ class TestFestivalSessionDBOP:
     @pytest.fixture(scope="session", autouse=True)
     def setup_database(self):
         # configure test database
-        os.environ['DB_URL'] = 'sqlite:///festival_session_test.db'
+        os.environ['DB_URL'] = 'sqlite:///festival.db'
         # create all tables
         Base.metadata.create_all(engine)
 
