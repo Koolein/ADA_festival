@@ -27,6 +27,9 @@ spec:
           value: DE2024-collin  # use your project id
         - name: DB_URL
           value: bigquery://DE2024-collin/festivaldb  # use your project id/ bigquery db url
-        - _LOCATION = us-central1
-        - MODEL_REPO = festivalrepo
-        - MODEL_NAME = festival_models
+        - name: _LOCATION 
+          value: us-central1
+        - name: MODEL_REPO 
+          value: festivalrepo
+        - name: MODEL_NAME 
+          value: festival_models
