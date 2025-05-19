@@ -14,7 +14,7 @@ class FestivalDAO(Base):
                             back_populates="festival", 
                             cascade="all, delete-orphan"
                             )
-    status     = Column(Enum(FestivalStatus, name='Festival_status_enum'), nullable=False, default=FestivalStatus.STATUS_SCHEDULED)
+    status     = Column(Enum(FestivalStatus, name='Festival_status_enum'), nullable=False, default=FestivalStatus.SCHEDULED)
     def __init__(self, id, name, start_date, end_date):
         self.id = id
         self.name = name
