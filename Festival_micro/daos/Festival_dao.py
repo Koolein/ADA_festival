@@ -14,7 +14,7 @@ class FestivalDAO(Base):
                             back_populates="festival", 
                             cascade="all, delete-orphan"
                             )
-
+    Status
     def __init__(self, name, start_date, end_date):
         self.id = id
         self.name = name
