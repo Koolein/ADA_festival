@@ -34,7 +34,7 @@
 		"--enable-ip-alias",
 		"--enable-ip-access",
 		"--addons",
-		"HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver",
+		"HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver"
       ],
       "id": "cluster-creation"
     }
