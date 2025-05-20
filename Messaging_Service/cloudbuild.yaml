@@ -10,6 +10,6 @@ steps:
           --runtime=python310 \
           --entry-point=route_requests \
           --trigger-http \
-          --source messaging-service/
+          --source Messaging_Service/messaging-service/
 options:
   logging: CLOUD_LOGGING_ONLY
