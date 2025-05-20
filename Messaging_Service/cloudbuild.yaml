@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud functions deploy route_requests \
+          --gen2 \
+          --region=us-central1 \
+          --runtime=python310 \
+          --entry-point=route_requests \
+          --trigger-http \
+          --source messaging-service/
+options:
+  logging: CLOUD_LOGGING_ONLY
