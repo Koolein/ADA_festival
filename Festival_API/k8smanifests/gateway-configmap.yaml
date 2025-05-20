@@ -5,6 +5,330 @@ metadata:
   namespace: festivaldomain
 data:
   krakend.json: |-
-{{- with (index (splitList "\n" (cat "krakend.json")) 0) }}
-{{ cat "krakend.json" }}
-{{- end }}
+  {
+    "$schema": "https://www.krakend.io/schema/v3.0/krakend.json",
+    "version": 3,
+    "name": "festival-gateway",
+    "port": 8080,
+    "endpoints": [
+      {
+        "endpoint": "/festivals",
+        "method": "GET",
+        "output_encoding": "json",
+        "extra_config": {
+          "github.com/devopsfaith/krakend-ratelimit/juju": {
+            "maxRate": 100,
+            "clientMaxRate": 10
+          },
+          "github.com/devopsfaith/krakend-httpcache": {
+            "cache_ttl": "30s"
+          },
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        },
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals",
+            "sd": "static",
+            "encoding": "json"
+          }
+        ]
+      },
+      {
+        "endpoint": "/festivals/{festival_id}",
+        "method": "GET",
+        "output_encoding": "json",
+        "extra_config": {
+          "github.com/devopsfaith/krakend-circuitbreaker/breaker": {
+            "type": "simple",
+            "max_errors": 5,
+            "timeout": "10s"
+          },
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        },
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals/{festival_id}",
+            "sd": "static",
+            "mapping": {
+              "festival_id": "festival_id"
+            }
+          }
+        ]
+      },
+      {
+        "endpoint": "/festivals/{festival_id}/sessions",
+        "method": "GET",
+        "output_encoding": "json",
+        "extra_config": {
+          "github.com/devopsfaith/krakend-httpcache": {
+            "cache_ttl": "30s"
+          },
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        },
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals/{festival_id}/sessions",
+            "sd": "static",
+            "mapping": {
+              "festival_id": "festival_id"
+            }
+          }
+        ]
+      },
+      {
+        "endpoint": "/sessions/{session_id}",
+        "method": "GET",
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/sessions/{session_id}",
+            "sd": "static",
+            "mapping": {
+              "session_id": "session_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/festivals",
+        "method": "POST",
+        "input_headers": [
+          "Content-Type"
+        ],
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals",
+            "method": "POST",
+            "extra_config": {
+              "github.com/devopsfaith/krakend/proxy": {
+                "group": "create"
+              }
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/festivals/{festival_id}",
+        "method": "PUT",
+        "input_headers": [
+          "Content-Type"
+        ],
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals/{festival_id}",
+            "method": "PUT",
+            "sd": "static",
+            "mapping": {
+              "festival_id": "festival_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/festivals/{festival_id}",
+        "method": "DELETE",
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals/{festival_id}",
+            "method": "DELETE",
+            "sd": "static",
+            "mapping": {
+              "festival_id": "festival_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/festivals/{festival_id}/sessions",
+        "method": "POST",
+        "input_headers": [
+          "Content-Type"
+        ],
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/festivals/{festival_id}/sessions",
+            "method": "POST",
+            "sd": "static",
+            "mapping": {
+              "festival_id": "festival_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/sessions/{session_id}",
+        "method": "PUT",
+        "input_headers": [
+          "Content-Type"
+        ],
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/sessions/{session_id}",
+            "method": "PUT",
+            "sd": "static",
+            "mapping": {
+              "session_id": "session_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }
+      },
+      {
+        "endpoint": "/sessions/{session_id}",
+        "method": "DELETE",
+        "output_encoding": "json",
+        "backend": [
+          {
+            "host": [
+              "http://festival-service-api:5000"
+            ],
+            "url_pattern": "/sessions/{session_id}",
+            "method": "DELETE",
+            "sd": "static",
+            "mapping": {
+              "session_id": "session_id"
+            }
+          }
+        ],
+        "extra_config": {
+          "qos/ratelimit/router": {
+            "max_rate": 3,
+            "client_max_rate": 0,
+            "strategy": "ip",
+            "capacity": 0,
+            "every": "0m",
+            "client_capacity": 0
+          }
+        }      }
+    ],
+    "extra_config": {
+      "github.com/devopsfaith/krakend-cors": {
+        "allow_origins": [
+          "*"
+        ],
+        "allow_methods": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "OPTIONS"
+        ],
+        "max_age": "12h"
+      }
+    },
+    "output_encoding": "json"
+  }
+  
+  
