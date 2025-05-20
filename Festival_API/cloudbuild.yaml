@@ -14,7 +14,7 @@ steps:
           --region "$_LOCATION" \
           --tier "standard" \
           --no-enable-basic-auth \
-          --machine-type "e2-micro" \
+          --machine-type "e2-small" \
           --image-type "COS_CONTAINERD" \
           --disk-type "pd-balanced" \
           --disk-size "30" \
