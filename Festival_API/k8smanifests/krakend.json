@@ -11,7 +11,9 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals",
           "method": "GET"
         }
@@ -24,7 +26,9 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals",
           "method": "POST"
         }
@@ -36,8 +40,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/festivals/{{.Params.f_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "GET"
         }
       ]
@@ -49,8 +55,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/festivals/{{.Params.f_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "PUT"
         }
       ]
@@ -61,8 +69,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/festivals/{{.Params.f_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "DELETE"
         }
       ]
@@ -73,8 +83,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/festivals/{{.Params.f_id}}/sessions",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
           "method": "GET"
         }
       ]
@@ -86,8 +98,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/festivals/{{.Params.f_id}}/sessions",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
           "method": "POST"
         }
       ]
@@ -98,8 +112,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/sessions/{{.Params.s_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "GET"
         }
       ]
@@ -111,8 +127,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/sessions/{{.Params.s_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "PUT"
         }
       ]
@@ -123,8 +141,10 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
-          "url_pattern": "/sessions/{{.Params.s_id}}",
+          "host": [
+            "http://festival-service-api:5000"
+          ],
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "DELETE"
         }
       ]
