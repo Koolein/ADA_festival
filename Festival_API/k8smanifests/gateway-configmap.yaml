@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: krakend-config
+  namespace: festivaldomain
+data:
+  krakend.json: |-
+{{- with (index (splitList "\n" (cat "krakend.json")) 0) }}
+{{ cat "krakend.json" }}
+{{- end }}

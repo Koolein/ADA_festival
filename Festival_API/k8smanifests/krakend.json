@@ -3,7 +3,6 @@
   "version": 3,
   "name": "festival-gateway",
   "port": 8080,
-
   "endpoints": [
     {
       "endpoint": "/festivals",
@@ -16,13 +15,24 @@
         },
         "github.com/devopsfaith/krakend-httpcache": {
           "cache_ttl": "30s"
+        },
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
         }
       },
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals",
-          "sd": "static"
+          "sd": "static",
+          "encoding": "json"
         }
       ]
     },
@@ -35,11 +45,21 @@
           "type": "simple",
           "max_errors": 5,
           "timeout": "10s"
+        },
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
         }
       },
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals/{festival_id}",
           "sd": "static",
           "mapping": {
@@ -55,11 +75,21 @@
       "extra_config": {
         "github.com/devopsfaith/krakend-httpcache": {
           "cache_ttl": "30s"
+        },
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
         }
       },
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals/{festival_id}/sessions",
           "sd": "static",
           "mapping": {
@@ -74,23 +104,39 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/sessions/{session_id}",
           "sd": "static",
           "mapping": {
             "session_id": "session_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/festivals",
       "method": "POST",
-      "input_headers": ["Content-Type"],
+      "input_headers": [
+        "Content-Type"
+      ],
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals",
           "method": "POST",
           "extra_config": {
@@ -99,16 +145,30 @@
             }
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/festivals/{festival_id}",
       "method": "PUT",
-      "input_headers": ["Content-Type"],
+      "input_headers": [
+        "Content-Type"
+      ],
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals/{festival_id}",
           "method": "PUT",
           "sd": "static",
@@ -116,7 +176,17 @@
             "festival_id": "festival_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/festivals/{festival_id}",
@@ -124,7 +194,9 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals/{festival_id}",
           "method": "DELETE",
           "sd": "static",
@@ -132,16 +204,30 @@
             "festival_id": "festival_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/festivals/{festival_id}/sessions",
       "method": "POST",
-      "input_headers": ["Content-Type"],
+      "input_headers": [
+        "Content-Type"
+      ],
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/festivals/{festival_id}/sessions",
           "method": "POST",
           "sd": "static",
@@ -149,16 +235,30 @@
             "festival_id": "festival_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/sessions/{session_id}",
       "method": "PUT",
-      "input_headers": ["Content-Type"],
+      "input_headers": [
+        "Content-Type"
+      ],
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/sessions/{session_id}",
           "method": "PUT",
           "sd": "static",
@@ -166,7 +266,17 @@
             "session_id": "session_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     },
     {
       "endpoint": "/sessions/{session_id}",
@@ -174,7 +284,9 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://festival-service-api:5000"],
+          "host": [
+            "http://festival-service-api:5000"
+          ],
           "url_pattern": "/sessions/{session_id}",
           "method": "DELETE",
           "sd": "static",
@@ -182,15 +294,33 @@
             "session_id": "session_id"
           }
         }
-      ]
+      ],
+      "extra_config": {
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "every": "0m",
+          "client_capacity": 0
+        }
+      }
     }
   ],
-
   "extra_config": {
     "github.com/devopsfaith/krakend-cors": {
-      "allow_origins": ["*"],
-      "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "allow_origins": [
+        "*"
+      ],
+      "allow_methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+      ],
       "max_age": "12h"
     }
-  }
+  },
+  "output_encoding": "json"
 }

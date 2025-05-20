@@ -4,9 +4,9 @@ metadata:
   name: festival-service-api
   namespace: festivaldomain
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 5000
-    targetPort: 5000
   selector:
     app: festival-service-api
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
