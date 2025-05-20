@@ -11,6 +11,6 @@ COPY . .
 # Expose the port that our app runs in
 EXPOSE 5000
 # Enviroment Variables
-ENV DB_URL= "bigquery://DE2024-collin/festivaldb"
+ENV DB_URL =bigquery://DE2024-collin/festivaldb
 # Run our App
 CMD ["python3","app.py"]
