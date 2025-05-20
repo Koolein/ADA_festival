@@ -2,4 +2,6 @@ flask
 sqlalchemy
 sqlalchemy-utils
 sqlalchemy-bigquery
+pybigquery           
+google-cloud-bigquery
 pytest
