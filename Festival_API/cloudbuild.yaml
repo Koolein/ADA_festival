@@ -1,39 +1,33 @@
 steps:
-
 # 1️⃣ Create the GKE cluster (if it doesn’t already exist)
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   id: cluster-creation
-  entrypoint: gcloud
-  options:
-    logging: CLOUD_LOGGING_ONLY
+  entrypoint: bash
   args:
-    - container
-    - clusters
-    - create
-    - "$_CLUSTER_NAME"
-    - "--project"
-    - "$PROJECT_ID"
-    - "--region"
-    - "$_LOCATION"
-    - "--tier"
-    - "standard"
-    - "--no-enable-basic-auth"
-    - "--machine-type"
-    - "e2-medium"
-    - "--image-type"
-    - "COS_CONTAINERD"
-    - "--disk-type"
-    - "pd-balanced"
-    - "--disk-size"
-    - "50"
-    - "--scopes"
-    - "https://www.googleapis.com/auth/cloud-platform"
-    - "--num-nodes"
-    - "1"
-    - "--enable-ip-alias"
-    - "--enable-ip-access"
-    - "--addons"
-    - "HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver"
+    - -c
+    - |
+      # Check if the cluster already exists
+      if ! gcloud container clusters describe "$_CLUSTER_NAME" --region "$_LOCATION" --project "$PROJECT_ID"; then
+        echo "Cluster $_CLUSTER_NAME not found. Creating it now..."
+        gcloud container clusters create "$_CLUSTER_NAME" \
+          --project "$PROJECT_ID" \
+          --region "$_LOCATION" \
+          --tier "standard" \
+          --no-enable-basic-auth \
+          --machine-type "e2-medium" \
+          --image-type "COS_CONTAINERD" \
+          --disk-type "pd-balanced" \
+          --disk-size "50" \
+          --scopes "https://www.googleapis.com/auth/cloud-platform" \
+          --enable-ip-alias \
+          --enable-ip-access \
+          --enable-autoscaling \
+          --min-nodes "0" \
+          --max-nodes "1" \
+          --addons "HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver"
+      else
+        echo "Cluster $_CLUSTER_NAME already exists. Skipping creation."
+      fi
 
 # 2️⃣ Run your Python tests
 - name: python:3.10.8-slim-buster
