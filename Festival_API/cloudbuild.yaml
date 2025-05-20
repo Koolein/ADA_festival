@@ -14,16 +14,14 @@ steps:
           --region "$_LOCATION" \
           --tier "standard" \
           --no-enable-basic-auth \
-          --machine-type "e2-medium" \
+          --machine-type "e2-micro" \
           --image-type "COS_CONTAINERD" \
           --disk-type "pd-balanced" \
-          --disk-size "50" \
+          --disk-size "30" \
           --scopes "https://www.googleapis.com/auth/cloud-platform" \
           --enable-ip-alias \
           --enable-ip-access \
-          --enable-autoscaling \
-          --min-nodes "0" \
-          --max-nodes "1" \
+          --num-nodes "1" \
           --addons "HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver"
       else
         echo "Cluster $_CLUSTER_NAME already exists. Skipping creation."
