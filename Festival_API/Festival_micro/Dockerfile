@@ -13,4 +13,4 @@ EXPOSE 5000
 # Enviroment Variables
 ENV DB_URL=bigquery://DE2024-collin/festivaldb
 # Run our App
-CMD ["python3","app.py"]
+CMD ["python3", "app.py"]
