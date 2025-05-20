@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "name": "Festival and Session API Gateway",
   "port": 8080,
   "timeout": "3s",
