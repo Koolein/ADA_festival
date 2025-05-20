@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: festival-gateway
-        image: devopsfaith/krakend:2.9
+        image: krakend:2.9
         args: ["run", "-c", "/etc/krakend/krakend.json"]
         ports:
         - containerPort: 8080
