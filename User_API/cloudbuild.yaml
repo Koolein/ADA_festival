@@ -27,33 +27,33 @@ steps:
         echo "Cluster $_CLUSTER_NAME already exists. Skipping creation."
       fi
 
-# 3️⃣ Build & push the User API container
+# 3️⃣ Build & push the user API container
 - name: gcr.io/cloud-builders/docker
   args:
     - build
     - -t
-    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User_service-api:0.0.1"
-    - User_API/User_micro
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user_service-api:0.0.1"
+    - user_API/user_micro
 
 - name: gcr.io/cloud-builders/docker
   args:
     - push
-    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User_service-api:0.0.1"
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user_service-api:0.0.1"
 
 # 4️⃣ Build & push the KrakenD gateway container
 - name: gcr.io/cloud-builders/docker
   args:
     - build
     - -f
-    - "User_API/k8smanifests/Dockerfile.gateway"
+    - "user_API/k8smanifests/Dockerfile.gateway"
     - -t
-    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User-gateway:0.0.1"
-    - User_API/k8smanifests
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user-gateway:0.0.1"
+    - user_API/k8smanifests
 
 - name: gcr.io/cloud-builders/docker
   args:
     - push
-    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User-gateway:0.0.1"
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user-gateway:0.0.1"
 
 # 5️⃣ Get GKE credentials for kubectl
 - name: gcr.io/cloud-builders/gcloud
@@ -67,7 +67,7 @@ steps:
 
 # 6️⃣ Apply all Kubernetes manifests
 - name: gcr.io/cloud-builders/kubectl
-  args: ["apply", "-f", "User_API/k8smanifests/namespace.yaml"]
+  args: ["apply", "-f", "user_API/k8smanifests/namespace.yaml"]
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
@@ -77,14 +77,14 @@ steps:
     - create
     - configmap
     - krakend-config
-    - --from-file=krakend.json=User_API/k8smanifests/krakend.json
-    - --namespace=Userdomain
+    - --from-file=krakend.json=user_API/k8smanifests/krakend.json
+    - --namespace=userdomain
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
 
 - name: gcr.io/cloud-builders/kubectl
-  args: ["apply", "-f", "User_API/k8smanifests/*.yaml"]
+  args: ["apply", "-f", "user_API/k8smanifests/*.yaml"]
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
