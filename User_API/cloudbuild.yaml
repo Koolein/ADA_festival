@@ -72,16 +72,19 @@ steps:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
     
+
 - name: gcr.io/cloud-builders/kubectl
+  entrypoint: /bin/sh
   args:
-    - create
-    - configmap
-    - krakend-config
-    - --from-file=krakend.json=User_API/k8smanifests/krakend.json
-    - --namespace=userdomain
-  env:
-    - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
-    - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
+    - -c
+    - |
+      if ! kubectl get configmap krakend-config --namespace=userdomain > /dev/null 2>&1; then
+        kubectl create configmap krakend-config \
+          --from-file=krakend.json=User_API/k8smanifests/krakend.json \
+          --namespace=userdomain
+      else
+        echo "ConfigMap krakend-config already exists. Skipping creation."
+      fi
 
 - name: gcr.io/cloud-builders/kubectl
   args: ["apply", "-f", "User_API/k8smanifests/*.yaml"]
