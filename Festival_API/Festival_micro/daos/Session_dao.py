@@ -1,7 +1,6 @@
 from sqlalchemy import DateTime, ForeignKey, Column, String, Integer, Enum
 from sqlalchemy.orm import relationship
 from constant import SessionStatus
-import enum
 from db import Base
 
 class SessionDAO(Base):
@@ -17,7 +16,7 @@ class SessionDAO(Base):
     capacity    = Column(Integer, nullable=True)
     issued      = Column(Integer, nullable=True)
 
-    def __init__(self, capacity, status=SessionStatus.STATUS_UPCOMING, id=None, festival_id=None, title=None, start_time=None, end_time=None):
+    def __init__(self, capacity=None, status=SessionStatus.STATUS_UPCOMING, id=None, festival_id=None, title=None, start_time=None, end_time=None):
         self.id = id
         self.festival_id = festival_id
         self.title = title
