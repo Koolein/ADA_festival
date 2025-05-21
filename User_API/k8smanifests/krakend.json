@@ -1,171 +1,130 @@
 {
   "version": 3,
-  "name": "Festival and Session API Gateway",
+  "name": "User and Profile API Gateway",
   "port": 8080,
   "timeout": "40s",
   "cache_ttl": "300s",
   "endpoints": [
     {
-      "endpoint": "/festivals",
+      "endpoint": "/users",
       "method": "GET",
       "output_encoding": "json",
       "backend": [
         {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals",
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/users",
           "method": "GET"
         }
       ]
     },
     {
-      "endpoint": "/festivals",
+      "endpoint": "/users",
       "method": "POST",
       "input_encoding": "json",
       "output_encoding": "json",
       "backend": [
         {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals",
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/users",
           "method": "POST"
         }
       ]
     },
     {
-      "endpoint": "/festivals/{f_id}",
+      "endpoint": "/users/{u_id}",
       "method": "GET",
       "output_encoding": "json",
       "backend": [
         {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "GET"
         }
       ]
     },
     {
-      "endpoint": "/festivals/{f_id}",
-      "method": "PUT",
-      "input_encoding": "json",
-      "output_encoding": "json",
-      "extra_config": {
-        "github.com/devopsfaith/krakend/aggregator": {
-          "merge_strategy": "no_merge"
-        }
-      },
-      "backend": [
-        {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
-          "method": "PUT"
-        },
-        {
-          "host": [
-            "https://change-festival-869950393537.us-central1.run.app"
-          ],
-          "url_pattern": "/festival_change",
-          "method": "POST",
-          "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
-              "static_body": "{\"festival_id\": \"{{ .Input.Params.f_id }}\"}"
-            },
-            "github.com/devopsfaith/krakend/http": {
-              "disable_host_sanitization": true
-            }
-          }
-        }
-      ]
-    },
-    {
-      "endpoint": "/festivals/{f_id}/sessions",
-      "method": "GET",
-      "output_encoding": "json",
-      "backend": [
-        {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
-          "method": "GET"
-        }
-      ]
-    },
-    {
-      "endpoint": "/festivals/{f_id}/sessions",
-      "method": "POST",
-      "input_encoding": "json",
-      "output_encoding": "json",
-      "backend": [
-        {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
-          "method": "POST"
-        }
-      ]
-    },
-    {
-      "endpoint": "/sessions/{s_id}",
-      "method": "GET",
-      "output_encoding": "json",
-      "backend": [
-        {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
-          "method": "GET"
-        }
-      ]
-    },
-    {
-      "endpoint": "/sessions/{s_id}",
+      "endpoint": "/users/{u_id}",
       "method": "PUT",
       "input_encoding": "json",
       "output_encoding": "json",
       "backend": [
         {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "PUT"
-        },
-        {
-          "host": [
-            "https://change-festival-869950393537.us-central1.run.app"
-          ],
-          "url_pattern": "/festival_change",
-          "method": "POST",
-          "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
-              "static_body": "{\"session_id\": \"{{ .Input.Params.f_id }}\"}"
-            },
-            "github.com/devopsfaith/krakend/http": {
-              "disable_host_sanitization": true
-            }
-          }
         }
       ]
     },
     {
-      "endpoint": "/sessions/{s_id}",
+      "endpoint": "/users/{u_id}",
       "method": "DELETE",
       "output_encoding": "json",
       "backend": [
         {
-          "host": [
-            "http://festival-service-api:5000"
-          ],
-          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
+          "method": "DELETE"
+        }
+      ]
+    },
+    {
+      "endpoint": "/profiles",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/profiles",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "endpoint": "/profiles",
+      "method": "POST",
+      "input_encoding": "json",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/profiles",
+          "method": "POST"
+        }
+      ]
+    },
+    {
+      "endpoint": "/profiles/{p_id}",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "endpoint": "/profiles/{p_id}",
+      "method": "PUT",
+      "input_encoding": "json",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
+          "method": "PUT"
+        }
+      ]
+    },
+    {
+      "endpoint": "/profiles/{p_id}",
+      "method": "DELETE",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://user-service-api:5000"],
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "DELETE"
         }
       ]
