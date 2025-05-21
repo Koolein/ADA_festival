@@ -1,8 +1,0 @@
-{
-  "name": "trigger-workflow",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "@google-cloud/workflows": "^1.0.0"
-  }
-}
