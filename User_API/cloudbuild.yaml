@@ -33,7 +33,7 @@ steps:
     - build
     - -t
     - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user_service-api:0.0.1"
-    - user_API/user_micro
+    - User_API/User_micro
 
 - name: gcr.io/cloud-builders/docker
   args:
@@ -45,10 +45,10 @@ steps:
   args:
     - build
     - -f
-    - "user_API/k8smanifests/Dockerfile.gateway"
+    - "User_API/k8smanifests/Dockerfile.gateway"
     - -t
     - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/user-gateway:0.0.1"
-    - user_API/k8smanifests
+    - User_API/k8smanifests
 
 - name: gcr.io/cloud-builders/docker
   args:
@@ -77,7 +77,7 @@ steps:
     - create
     - configmap
     - krakend-config
-    - --from-file=krakend.json=user_API/k8smanifests/krakend.json
+    - --from-file=krakend.json=User_API/k8smanifests/krakend.json
     - --namespace=userdomain
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
