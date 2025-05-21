@@ -1,5 +1,5 @@
-from db import SessionLocal, Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy.orm import relationship
 from db import Base
 
 class UserDAO(Base):

@@ -1,21 +1,29 @@
-from db import SessionLocal, Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from db import Base
 
-class UserDAO(Base):
-    __tablename__ = "users"
+class ProfileDAO(Base):
+    __tablename__ = "profiles"
+
     id          = Column(Integer, primary_key=True)
-    name        = Column(String, nullable=False)
-    start_date  = Column(DateTime)
-    end_date    = Column(DateTime)
-    sessions = relationship("SessionDAO", 
-                            back_populates="user", 
-                            cascade="all, delete-orphan"
-                            )
-    status     = Column(Enum(UserStatus, name='User_status_enum'), nullable=False, default=UserStatus.SCHEDULED)
-    def __init__(self, id, name, start_date, end_date, status=UserStatus.SCHEDULED):
-        self.id = id
-        self.name = name
-        self.start_date = start_date
-        self.end_date = end_date
-        self.status = status
+    user_id     = Column(Integer, ForeignKey("users.id"), nullable=False)
+    first_name  = Column(String, nullable=False)
+    last_name   = Column(String, nullable=False)
+    bio         = Column(String, nullable=True)
+    avatar_url  = Column(String, nullable=True)
+    created_at  = Column(DateTime, nullable=False)
+    updated_at  = Column(DateTime, nullable=True)
+
+    # back‐ref to UserDAO
+    user = relationship("UserDAO", back_populates="profile")
+
+    def __init__(self, user_id, first_name, last_name, created_at, bio=None, avatar_url=None, updated_at=None, id=None
+    ):
+        self.id         = id
+        self.user_id    = user_id
+        self.first_name = first_name
+        self.last_name  = last_name
+        self.bio        = bio
+        self.avatar_url = avatar_url
+        self.created_at = created_at
+        self.updated_at = updated_at
