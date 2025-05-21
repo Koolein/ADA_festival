@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: festival-gateway
-  namespace: festivaldomain
+  name: user-gateway
+  namespace: userdomain
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: festival-gateway
+      app: user-gateway
   template:
     metadata:
       labels:
-        app: festival-gateway
+        app: user-gateway
     spec:
       containers:
-      - name: festival-gateway
+      - name: user-gateway
         image: krakend:2.9
         args: ["run", "-c", "/etc/krakend/krakend.json"]
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         volumeMounts:
         - name: krakend-config
           mountPath: /etc/krakend/krakend.json

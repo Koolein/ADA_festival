@@ -2,34 +2,34 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: festival-service-api
-  name: festival-service-api
-  namespace: festivaldomain
+    app: user-service-api
+  name: user-service-api
+  namespace: userdomain
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: festival-service-api
+      app: user-service-api
   template:
     metadata:
       labels:
-        app: festival-service-api
+        app: user-service-api
     spec:
       containers:
-      - image: us-central1-docker.pkg.dev/de2024-collin/festivalrepo/festival_service-api:0.0.1
-        name: festival-service-api
+      - image: us-central1-docker.pkg.dev/de2024-collin/userrepo/user_service-api:0.0.1
+        name: user-service-api
         imagePullPolicy: Always
         ports:
-        - containerPort: 5000
+        - containerPort: 5001
           protocol: TCP
         env:
         - name: PROJECT_ID
           value: de2024-collin
         - name: DB_URL
-          value: bigquery://de2024-collin/festivaldb
+          value: bigquery://de2024-collin/userdb
         - name: _LOCATION 
           value: us-central1
         - name: MODEL_REPO 
-          value: festivalrepo
+          value: userrepo
         - name: MODEL_NAME 
-          value: festival_models
+          value: user_models
