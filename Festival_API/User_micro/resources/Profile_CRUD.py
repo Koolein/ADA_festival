@@ -1,35 +1,52 @@
-from flask_restful import Resource, reqparse
-from daos.Profile_dao import ProfileDAO
+from sqlalchemy.orm import Session
+from datetime import datetime
+from .profile_dao import ProfileDAO
 
-parser = reqparse.RequestParser()
-parser.add_argument('user_id', type=int, required=True)
-parser.add_argument('bio', type=str)
-parser.add_argument('contact', type=str)
+def get_profile(db: Session, profile_id: int) -> ProfileDAO:
+    return db.query(ProfileDAO).filter(ProfileDAO.id == profile_id).first()
 
-class ProfileListResource(Resource):
-    def get(self):
-        dao = ProfileDAO()
-        return [vars(p) for p in dao.db.query(p for p in dao.db.query.__self__.__class__).all()], 200
+def create_profile(
+    db: Session,
+    user_id: int,
+    first_name: str,
+    last_name: str,
+    created_at: datetime = None,
+    bio: str = None,
+    avatar_url: str = None
+) -> ProfileDAO:
+    now = created_at or datetime.utcnow()
+    db_profile = ProfileDAO(
+        user_id=user_id,
+        first_name=first_name,
+        last_name=last_name,
+        created_at=now,
+        bio=bio,
+        avatar_url=avatar_url
+    )
+    db.add(db_profile)
+    db.commit()
+    db.refresh(db_profile)
+    return db_profile
 
-    def post(self):
-        args = parser.parse_args()
-        dao = ProfileDAO()
-        profile = dao.create(args['user_id'], args.get('bio'), args.get('contact'))
-        return vars(profile), 201
+def update_profile(
+    db: Session,
+    profile_id: int,
+    **fields
+) -> ProfileDAO:
+    db_profile = get_profile(db, profile_id)
+    if not db_profile:
+        return None
+    for key, value in fields.items():
+        setattr(db_profile, key, value)
+    db_profile.updated_at = datetime.utcnow()
+    db.commit()
+    db.refresh(db_profile)
+    return db_profile
 
-class ProfileResource(Resource):
-    def get(self, profile_id):
-        dao = ProfileDAO()
-        profile = dao.get(profile_id)
-        return vars(profile), 200 if profile else 404
-
-    def put(self, profile_id):
-        args = parser.parse_args()
-        dao = ProfileDAO()
-        profile = dao.update(profile_id, **{k:v for k,v in args.items() if v is not None})
-        return vars(profile), 200
-
-    def delete(self, profile_id):
-        dao = ProfileDAO()
-        dao.delete(profile_id)
-        return '', 204
+def delete_profile(db: Session, profile_id: int) -> ProfileDAO:
+    db_profile = get_profile(db, profile_id)
+    if not db_profile:
+        return None
+    db.delete(db_profile)
+    db.commit()
+    return db_profile

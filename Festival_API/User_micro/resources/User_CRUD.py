@@ -1,34 +1,48 @@
-from flask_restful import Resource, reqparse
-from daos.User_dao import UserDAO
+from sqlalchemy.orm import Session
+from datetime import datetime
+from .user_dao import UserDAO
 
-parser = reqparse.RequestParser()
-parser.add_argument('username', type=str, required=True, help='Username cannot be blank')
-parser.add_argument('email', type=str, required=True, help='Email cannot be blank')
+def get_user(db: Session, user_id: int) -> UserDAO:
+    return db.query(UserDAO).filter(UserDAO.id == user_id).first()
 
-class UserListResource(Resource):
-    def get(self):
-        dao = UserDAO()
-        return [vars(u) for u in dao.db.query(dao.db.query(dao.db.query.__self__.__class__).all() )], 200
+def create_user(
+    db: Session,
+    username: str,
+    email: str,
+    hashed_password: str,
+    created_at: datetime = None
+) -> UserDAO:
+    now = created_at or datetime.utcnow()
+    db_user = UserDAO(
+        username=username,
+        email=email,
+        hashed_password=hashed_password,
+        created_at=now
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
-    def post(self):
-        args = parser.parse_args()
-        dao = UserDAO()
-        user = dao.create(args['username'], args['email'])
-        return vars(user), 201
+def update_user(
+    db: Session,
+    user_id: int,
+    **fields
+) -> UserDAO:
+    db_user = get_user(db, user_id)
+    if not db_user:
+        return None
+    for key, value in fields.items():
+        setattr(db_user, key, value)
+    db_user.updated_at = datetime.utcnow()
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
-class UserResource(Resource):
-    def get(self, user_id):
-        dao = UserDAO()
-        user = dao.get(user_id)
-        return vars(user), 200 if user else 404
-
-    def put(self, user_id):
-        args = parser.parse_args()
-        dao = UserDAO()
-        user = dao.update(user_id, **args)
-        return vars(user), 200
-
-    def delete(self, user_id):
-        dao = UserDAO()
-        dao.delete(user_id)
-        return '', 204
+def delete_user(db: Session, user_id: int) -> UserDAO:
+    db_user = get_user(db, user_id)
+    if not db_user:
+        return None
+    db.delete(db_user)
+    db.commit()
+    return db_user
