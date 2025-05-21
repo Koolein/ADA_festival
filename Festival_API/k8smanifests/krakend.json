@@ -138,6 +138,21 @@
           ],
           "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "PUT"
+        },
+        {
+          "host": [
+            "https://change-festival-869950393537.us-central1.run.app"
+          ],
+          "url_pattern": "/festival_change",
+          "method": "POST",
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "static_body": "{\"session_id\": \"{{ .Input.Params.f_id }}\"}"
+            },
+            "github.com/devopsfaith/krakend/http": {
+              "disable_host_sanitization": true
+            }
+          }
         }
       ]
     },
