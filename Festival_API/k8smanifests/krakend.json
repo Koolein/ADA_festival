@@ -53,6 +53,11 @@
       "method": "PUT",
       "input_encoding": "json",
       "output_encoding": "json",
+      "extra_config": {
+        "github.com/devopsfaith/krakend/aggregator": {
+          "merge_strategy": "no_merge"
+        }
+      },
       "backend": [
         {
           "host": [
@@ -60,20 +65,21 @@
           ],
           "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "PUT"
-        }
-      ]
-    },
-    {
-      "endpoint": "/festivals/{f_id}",
-      "method": "DELETE",
-      "output_encoding": "json",
-      "backend": [
+        },
         {
           "host": [
-            "http://festival-service-api:5000"
+            "https://triggerworkflow-869950393537.us-central1.run.app"
           ],
-          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
-          "method": "DELETE"
+          "url_pattern": "/festival_change",
+          "method": "POST",
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "static_body": "{\"festival_id\": \"{{ .Input.Params.f_id }}\"}"
+            },
+            "github.com/devopsfaith/krakend/http": {
+              "disable_host_sanitization": true
+            }
+          }
         }
       ]
     },
