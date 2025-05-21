@@ -2,7 +2,7 @@
   "version": 3,
   "name": "Festival and Session API Gateway",
   "port": 8080,
-  "timeout": "20s",
+  "timeout": "40s",
   "cache_ttl": "300s",
   "endpoints": [
     {
