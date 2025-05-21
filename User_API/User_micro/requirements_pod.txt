@@ -1,4 +1,7 @@
 flask
 flask-restful
 sqlalchemy
-psycopg2-binary
+sqlalchemy-utils
+sqlalchemy-bigquery
+pybigquery           
+google-cloud-bigquery
