@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Integer, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Enum
 from db import Base
+from constant import Userpref
 
 class UserDAO(Base):
     __tablename__ = "users"
@@ -11,7 +12,8 @@ class UserDAO(Base):
     hashed_password = Column(String, nullable=False)
     created_at      = Column(DateTime, nullable=False)
     updated_at      = Column(DateTime, nullable=True)
-
+    phone           = Column(String, nullable=True)
+    preferred       = Column(Enum(Userpref, name='User_pref_enum'), nullable=False, default=Userpref.SMS)
     # one‐to‐one with Profile
     profile = relationship(
         "ProfileDAO",
@@ -20,10 +22,12 @@ class UserDAO(Base):
         cascade="all, delete-orphan"
     )
 
-    def __init__(self, username, email, hashed_password, created_at, updated_at=None, id=None):
+    def __init__(self, username, phone, email, preferred, hashed_password, created_at, updated_at=None, id=None):
         self.id              = id
         self.username        = username
         self.email           = email
         self.hashed_password = hashed_password
         self.created_at      = created_at
         self.updated_at      = updated_at
+        self.phone           = phone
+        self.preferred       = preferred

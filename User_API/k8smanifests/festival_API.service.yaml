@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: festival-service-api
+  namespace: festivaldomain
+spec:
+  selector:
+    app: festival-service-api
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000

@@ -1,0 +1,105 @@
+steps:
+# 1️⃣ Create the GKE cluster (if it doesn’t already exist)
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  id: cluster-creation
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      # Check if the cluster already exists
+      if ! gcloud container clusters describe "$_CLUSTER_NAME" --region "$_LOCATION" --project "$PROJECT_ID"; then
+        echo "Cluster $_CLUSTER_NAME not found. Creating it now..."
+        gcloud container clusters create "$_CLUSTER_NAME" \
+          --project "$PROJECT_ID" \
+          --region "$_LOCATION" \
+          --tier "standard" \
+          --no-enable-basic-auth \
+          --machine-type "e2-small" \
+          --image-type "COS_CONTAINERD" \
+          --disk-type "pd-balanced" \
+          --disk-size "30" \
+          --scopes "https://www.googleapis.com/auth/cloud-platform" \
+          --enable-ip-alias \
+          --enable-ip-access \
+          --num-nodes "1" \
+          --addons "HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver"
+      else
+        echo "Cluster $_CLUSTER_NAME already exists. Skipping creation."
+      fi
+
+# 2️⃣ Run your Python tests
+- name: python:3.10.8-slim-buster
+  entrypoint: /bin/sh
+  args:
+    - -c
+    - |
+      cd User_API/User_micro \
+      && python -m venv .myenv \
+      && . .myenv/bin/activate \
+      && pip install -r requirements_dev.txt \
+      && pytest --junitxml=${SHORT_SHA}_test_log.xml
+
+# 3️⃣ Build & push the User API container
+- name: gcr.io/cloud-builders/docker
+  args:
+    - build
+    - -t
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User_service-api:0.0.1"
+    - User_API/User_micro
+
+- name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User_service-api:0.0.1"
+
+# 4️⃣ Build & push the KrakenD gateway container
+- name: gcr.io/cloud-builders/docker
+  args:
+    - build
+    - -f
+    - "User_API/k8smanifests/Dockerfile.gateway"
+    - -t
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User-gateway:0.0.1"
+    - User_API/k8smanifests
+
+- name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - "${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/User-gateway:0.0.1"
+
+# 5️⃣ Get GKE credentials for kubectl
+- name: gcr.io/cloud-builders/gcloud
+  id: get-gke-credentials
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      gcloud container clusters get-credentials "$_CLUSTER_NAME" \
+        --region "$_LOCATION" --project "$PROJECT_ID"
+
+# 6️⃣ Apply all Kubernetes manifests
+- name: gcr.io/cloud-builders/kubectl
+  args: ["apply", "-f", "User_API/k8smanifests/namespace.yaml"]
+  env:
+    - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
+    - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
+    
+- name: gcr.io/cloud-builders/kubectl
+  args:
+    - create
+    - configmap
+    - krakend-config
+    - --from-file=krakend.json=User_API/k8smanifests/krakend.json
+    - --namespace=Userdomain
+  env:
+    - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
+    - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
+
+- name: gcr.io/cloud-builders/kubectl
+  args: ["apply", "-f", "User_API/k8smanifests/*.yaml"]
+  env:
+    - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
+    - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
