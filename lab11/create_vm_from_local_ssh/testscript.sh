@@ -1,1 +1,0 @@
-git clone https://github.com/IndikaKuma/ADA2025.git
