@@ -67,7 +67,7 @@ steps:
 
 # 6️⃣ Apply all Kubernetes manifests
 - name: gcr.io/cloud-builders/kubectl
-  args: ["apply", "-f", "user_API/k8smanifests/namespace.yaml"]
+  args: ["apply", "-f", "User_API/k8smanifests/namespace.yaml"]
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
@@ -84,7 +84,7 @@ steps:
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
 
 - name: gcr.io/cloud-builders/kubectl
-  args: ["apply", "-f", "user_API/k8smanifests/*.yaml"]
+  args: ["apply", "-f", "/User_API/k8smanifests/*.yaml"]
   env:
     - "CLOUDSDK_COMPUTE_REGION=$_LOCATION"
     - "CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME"
