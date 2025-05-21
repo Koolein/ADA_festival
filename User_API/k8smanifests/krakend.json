@@ -11,7 +11,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/users",
           "method": "GET"
         }
@@ -24,7 +24,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/users",
           "method": "POST"
         }
@@ -36,7 +36,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "GET"
         }
@@ -49,7 +49,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "PUT"
         }
@@ -61,7 +61,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "DELETE"
         }
@@ -73,7 +73,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/profiles",
           "method": "GET"
         }
@@ -86,7 +86,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/profiles",
           "method": "POST"
         }
@@ -98,7 +98,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "GET"
         }
@@ -111,7 +111,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "PUT"
         }
@@ -123,7 +123,7 @@
       "output_encoding": "json",
       "backend": [
         {
-          "host": ["http://user-service-api:5000"],
+          "host": ["http://user-service-api:5001"],
           "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "DELETE"
         }
