@@ -4,7 +4,7 @@ const executionsClient = new ExecutionsClient();
 exports.triggerWorkflow = async (req, res) => {
   const project = process.env.GCP_PROJECT || process.env.PROJECT_ID;
   const location = 'us-central1';
-  const workflow = 'my-workflow'; // update to your workflow name
+  const workflow = 'workflow';
 
   const parent = `projects/${project}/locations/${location}/workflows/${workflow}`;
 
