@@ -68,7 +68,7 @@
         },
         {
           "host": [
-            "https://triggerworkflow-869950393537.us-central1.run.app"
+            "https://change-festival-869950393537.us-central1.run.app"
           ],
           "url_pattern": "/festival_change",
           "method": "POST",
