@@ -1,7 +1,7 @@
 {
   "version": 3,
   "name": "User and Profile API Gateway",
-  "port": 8080,
+  "port": 8081,
   "timeout": "40s",
   "cache_ttl": "300s",
   "endpoints": [
