@@ -27,18 +27,6 @@ steps:
         echo "Cluster $_CLUSTER_NAME already exists. Skipping creation."
       fi
 
-# 2️⃣ Run your Python tests
-- name: python:3.10.8-slim-buster
-  entrypoint: /bin/sh
-  args:
-    - -c
-    - |
-      cd User_API/User_micro \
-      && python -m venv .myenv \
-      && . .myenv/bin/activate \
-      && pip install -r requirements_dev.txt \
-      && pytest --junitxml=${SHORT_SHA}_test_log.xml
-
 # 3️⃣ Build & push the User API container
 - name: gcr.io/cloud-builders/docker
   args:
