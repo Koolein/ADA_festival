@@ -52,7 +52,7 @@ class User_CRUD:
             } for u in users
         ]
         session.close()
-        return jsonify(result), 200
+        return jsonify({"results": result}), 200
 
     @staticmethod
     @bp.route('/users/<int:u_id>', methods=['GET'])

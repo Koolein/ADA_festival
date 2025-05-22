@@ -47,7 +47,7 @@ class Session_CRUD:
             } for s in sessions
         ]
         session.close()
-        return jsonify(result), 200
+        return jsonify({"results": result}), 200
 
     @staticmethod
     @bp.route('/sessions/<int:s_id>', methods=['GET'])

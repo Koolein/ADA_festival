@@ -55,7 +55,7 @@ class Profile_CRUD:
             } for p in profiles
         ]
         session.close()
-        return jsonify(result), 200
+        return jsonify({'results': result}), 200
 
     @staticmethod
     @bp.route('/profiles/<int:p_id>', methods=['GET'])

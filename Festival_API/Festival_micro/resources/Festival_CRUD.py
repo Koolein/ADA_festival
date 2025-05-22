@@ -49,7 +49,7 @@ class Festival_CRUD:
             } for f in festivals
         ]
         session.close()
-        return jsonify(result), 200
+        return jsonify({"festival": result}), 200
 
     @staticmethod
     @bp.route('/festivals/<int:f_id>', methods=['GET'])
