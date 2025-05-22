@@ -1,5 +1,5 @@
-from sqlalchemy import Column, String, Integer, DateTime
-from sqlalchemy.orm import relationship, Enum
+from sqlalchemy import Column, String, Integer, DateTime, Enum
+from sqlalchemy.orm import relationship
 from db import Base
 from constant import Userpref
 
