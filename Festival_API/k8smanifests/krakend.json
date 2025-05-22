@@ -169,6 +169,18 @@
           "method": "DELETE"
         }
       ]
+    },
+    {
+      "endpoint": "/festivals/{f_id}",
+      "method": "DELETE",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "host": ["http://festival-service-api:5000"],
+         "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
+         "method": "DELETE"
+        }
+      ]
     }
   ]
 }
