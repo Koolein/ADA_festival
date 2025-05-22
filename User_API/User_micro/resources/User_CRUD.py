@@ -14,7 +14,7 @@ class User_CRUD:
     def create():
         body = request.get_json()
         session = Session()
-
+        id = body.get('id')
         username = body.get('username')
         email = body.get('email')
         existing_user = session.query(UserDAO).filter(
@@ -26,10 +26,14 @@ class User_CRUD:
             return jsonify({'message': 'A user with that username or email already exists'}), 403
 
         user = UserDAO(
+            id=id,
             username=username,
             email=email,
             hashed_password=body['hashed_password'],
-            created_at=datetime.utcnow()
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+            phone=body.get('phone'),
+            preferred=body.get('preferred', 'SMS')  # Default to SMS if not provided
         )
         session.add(user)
         session.commit()
@@ -48,7 +52,9 @@ class User_CRUD:
                 'username': u.username,
                 'email': u.email,
                 'created_at': u.created_at.isoformat(),
-                'updated_at': u.updated_at.isoformat() if u.updated_at else None
+                'updated_at': u.updated_at.isoformat() if u.updated_at else None,
+                'phone': u.phone,
+                'preferred': u.preferred
             } for u in users
         ]
         session.close()

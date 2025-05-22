@@ -17,9 +17,7 @@ class UserDAO(Base):
     # one‐to‐one with Profile
     profile = relationship(
         "ProfileDAO",
-        back_populates="user",
-        uselist=False,
-        cascade="all, delete-orphan"
+        back_populates="user"
     )
 
     def __init__(self, username, phone, email, preferred, hashed_password, created_at, updated_at=None, id=None):
