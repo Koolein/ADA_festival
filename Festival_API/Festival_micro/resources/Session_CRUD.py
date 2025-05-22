@@ -30,7 +30,7 @@ class Session_CRUD:
         session.commit()
         session.refresh(new_sess)
         session.close()
-        return jsonify({'session_id': new_sess.id}), 201
+        return jsonify({'session_id': new_sess.id}), 200
 
     @staticmethod
     @bp.route('/festivals/<int:f_id>/sessions', methods=['GET'])

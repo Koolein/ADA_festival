@@ -39,7 +39,7 @@ class User_CRUD:
         session.commit()
         session.refresh(user)
         session.close()
-        return jsonify({'user_id': user.id}), 201
+        return jsonify({'user_id': user.id}), 200
 
     @staticmethod
     @bp.route('/users', methods=['GET'])

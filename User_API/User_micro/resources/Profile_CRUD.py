@@ -35,7 +35,7 @@ class Profile_CRUD:
         session.commit()
         session.refresh(profile)
         session.close()
-        return jsonify({'profile_id': profile.id}), 201
+        return jsonify({'profile_id': profile.id}), 200
 
     @staticmethod
     @bp.route('/profiles', methods=['GET'])
