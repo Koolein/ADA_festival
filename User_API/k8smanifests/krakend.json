@@ -37,7 +37,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/users/{{.Input.Params.u_id}}",
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "GET"
         }
       ]
@@ -50,7 +50,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/users/{{.Input.Params.u_id}}",
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "PUT"
         }
       ]
@@ -62,7 +62,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/users/{{.Input.Params.u_id}}",
+          "url_pattern": "/users/{{ .Input.Params.u_id }}",
           "method": "DELETE"
         }
       ]
@@ -99,7 +99,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/profiles/{{.Input.Params.p_id}}",
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "GET"
         }
       ]
@@ -112,7 +112,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/profiles/{{.Input.Params.p_id}}",
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "PUT"
         }
       ]
@@ -124,7 +124,7 @@
       "backend": [
         {
           "host": ["http://user-service-api:5001"],
-          "url_pattern": "/profiles/{{.Input.Params.p_id}}",
+          "url_pattern": "/profiles/{{ .Input.Params.p_id }}",
           "method": "DELETE"
         }
       ]
