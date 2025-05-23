@@ -74,7 +74,7 @@ def build_messages(user_ids: Set[int]) -> List[dict]:
 
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
-            bigquery.ArrayQueryParameter("user_ids", "INT64", user_ids_list)
+            bigquery.ArrayQueryParameter("user_ids", "STRING", user_ids_list)
         ]
     )
 
