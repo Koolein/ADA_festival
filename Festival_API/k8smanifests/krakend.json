@@ -43,7 +43,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/festivals/{{.Input.Params.f_id}}",
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "GET"
         }
       ]
@@ -63,7 +63,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/festivals/{{.Input.Params.f_id}}",
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}",
           "method": "PUT"
         },
         {
@@ -74,7 +74,7 @@
           "method": "POST",
           "extra_config": {
             "github.com/devopsfaith/krakend/proxy": {
-              "static_body": "{\"festival_id\": \"{{.Input.Params.f_id}}\"}"
+              "static_body": "{\"festival_id\": \"{{ .Input.Params.f_id }}\"}"
             },
             "github.com/devopsfaith/krakend/http": {
               "disable_host_sanitization": true
@@ -92,7 +92,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/festivals/{{.Input.Params.f_id}}/sessions",
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
           "method": "GET"
         }
       ]
@@ -107,7 +107,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/festivals/{{.Input.Params.f_id}}/sessions",
+          "url_pattern": "/festivals/{{ .Input.Params.f_id }}/sessions",
           "method": "POST"
         }
       ]
@@ -121,7 +121,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/sessions/{{.Input.Params.s_id}}",
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "GET"
         }
       ]
@@ -136,7 +136,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/sessions/{{.Input.Params.s_id}}",
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "PUT"
         },
         {
@@ -147,7 +147,7 @@
           "method": "POST",
           "extra_config": {
             "github.com/devopsfaith/krakend/proxy": {
-              "static_body": "{\"session_id\": \"{{.Input.Params.f_id}}\"}"
+              "static_body": "{\"session_id\": \"{{ .Input.Params.f_id }}"
             },
             "github.com/devopsfaith/krakend/http": {
               "disable_host_sanitization": true
@@ -165,7 +165,7 @@
           "host": [
             "http://festival-service-api:5000"
           ],
-          "url_pattern": "/sessions/{{.Input.Params.s_id}}",
+          "url_pattern": "/sessions/{{ .Input.Params.s_id }}",
           "method": "DELETE"
         }
       ]
